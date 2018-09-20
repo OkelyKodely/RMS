@@ -437,7 +437,7 @@ public class OO_Rent extends javax.swing.JFrame {
 
     private void setReceipt()
     {
-        strReceipt = "Receipt\n\n";
+        strReceipt = "==RECEIPT\n \n";
         strReceipt += "========================\n";
         strReceipt += "CustomerID: " + escapeNull(customer.getCustomerID()) + "\n";
         strReceipt += "Name: " + escapeNull(customer.getFirstname()) + " " + escapeNull(customer.getSurname()) + "\n";
