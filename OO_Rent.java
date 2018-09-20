@@ -1,4 +1,8 @@
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.print.*;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -16,6 +20,8 @@ import javax.swing.JRadioButton;
  * @author Daniel Cho
  */
 public class OO_Rent extends javax.swing.JFrame {
+
+    private String strReceipt = "";
 
     private oCustomer customer = new oCustomer();
     
@@ -101,6 +107,7 @@ public class OO_Rent extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("By Daniel Cho");
@@ -191,15 +198,12 @@ public class OO_Rent extends javax.swing.JFrame {
         jPanel2.add(jtxtFirstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 107, 136, -1));
         jPanel2.add(jtxtSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 158, 136, -1));
         jPanel2.add(jtxtTown, new org.netbeans.lib.awtextra.AbsoluteConstraints(388, 160, 136, -1));
-
         jPanel2.add(jtxtPostcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(388, 107, 136, -1));
         jPanel2.add(jtxtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(388, 65, 136, -1));
         jPanel2.add(jtxtDeposit, new org.netbeans.lib.awtextra.AbsoluteConstraints(697, 158, 160, -1));
-
         jPanel2.add(jtxtDownPayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 107, 120, -1));
 
         jcmbProveOfID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilot License", "Driver License", "Passport", "Birth Certificate" }));
-
         jPanel2.add(jcmbProveOfID, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 60, 170, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 890, 220));
@@ -213,11 +217,9 @@ public class OO_Rent extends javax.swing.JFrame {
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 23, 179, -1));
 
         jbtnHouse.setText("House");
-
         jPanel3.add(jbtnHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, -1, -1));
 
         jbtnFlat.setText("Flat");
-
         jPanel3.add(jbtnFlat, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -267,37 +269,23 @@ public class OO_Rent extends javax.swing.JFrame {
         jPanel4.add(jtxtElectricity, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 136, -1));
         jPanel4.add(jtxtLocalTax, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 136, -1));
         jPanel4.add(jtxtWaterBill, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 136, -1));
-
         jPanel4.add(jtxtTotalPayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 136, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 380, 450, 320));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 12));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtxtReceipt.setColumns(20);
         jtxtReceipt.setRows(5);
         jScrollPane1.setViewportView(jtxtReceipt);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 23, 316, 344));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, 360, 390));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 12));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Rental");
@@ -306,14 +294,16 @@ public class OO_Rent extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel6.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 47, -1, 39));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Reset");
+        jButton2.setText("Print");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel6.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 47, -1, 41));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setText("Exit");
@@ -322,30 +312,16 @@ public class OO_Rent extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        jPanel6.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 47, 68, 41));
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50))
-        );
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton4.setText("Reset");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 47, -1, 41));
 
         getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 550, 360, 150));
 
@@ -360,30 +336,6 @@ public class OO_Rent extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jtxtCustomerID.setText(null);
-        jtxtFirstname.setText(null);
-        jtxtSurname.setText(null);
-        jtxtAddress.setText(null);
-        jtxtPostcode.setText(null);
-        jtxtTown.setText(null);
-        jtxtDownPayment.setText(null);
-        jtxtDeposit.setText(null);
-        jcmbProveOfID.setSelectedIndex(0);
-        
-        flatOrHouse.clearSelection();
-        jcmbNoOfRoom.setSelectedIndex(0);
-        jcmbLocation.setSelectedIndex(0);
-        jtxtCost.setText(null);
-
-        jtxtElectricity.setText(null);
-        jtxtLocalTax.setText(null);
-        jtxtWaterBill.setText(null);
-        jtxtTotalPayment.setText(null);
-        
-        jtxtReceipt.setText(null);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try
@@ -436,9 +388,80 @@ public class OO_Rent extends javax.swing.JFrame {
             itotal = icost + itax;
 
             jtxtTotalPayment.setText("$" + itotal + "");
+
+            setReceipt();
+            
         } catch(Exception e) {}
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        printPage(strReceipt);  
+    }
+
+    public void printPage(String textToPrint){
+        PrinterJob job = PrinterJob.getPrinterJob(); 
+        PageFormat landscape = job.defaultPage();
+        landscape.setOrientation(PageFormat.LANDSCAPE);
+        Book bk = new Book();
+        bk.append(new PaintCover(), job.defaultPage());
+        job.setPageable(bk);
+        if (job.printDialog()) {
+            try {
+                job.print();
+            } catch (Exception exc) {
+                System.out.println(exc);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    class PaintCover implements Printable{
+        Font fnt = new Font("Helvetica-Bold", Font.PLAIN, 14);
+
+        public int print(Graphics g, PageFormat pf, int pageIndex) throws PrinterException {
+            g.setFont(fnt);
+            g.setColor(Color.black);
+            java.util.StringTokenizer st = new java.util.StringTokenizer(strReceipt, "\n");
+            int i = 0;
+            while(st.hasMoreTokens())
+            {
+                String line = st.nextToken();
+                g.drawString(line, 100, 100 + i++*14);
+            }
+            return Printable.PAGE_EXISTS;
+        }
+    }
+
+    private void setReceipt()
+    {
+        strReceipt = "Receipt\n\n";
+        strReceipt += "========================\n";
+        strReceipt += "CustomerID: " + escapeNull(customer.getCustomerID()) + "\n";
+        strReceipt += "Name: " + escapeNull(customer.getFirstname()) + " " + escapeNull(customer.getSurname()) + "\n";
+        strReceipt += "Address: " + escapeNull(customer.getAddress()) + " " + escapeNull(customer.getTown()) + ", " + escapeNull(customer.getPostcode()) + "\n";
+        strReceipt += "Down Payment: $" + customer.getDownPayment() + "\n";
+        strReceipt += "Deposit: $" + customer.getDeposit() + "\n";
+        strReceipt += "Prove Of ID: " + customer.getProveofID() + "\n";
+        strReceipt += "========================\n";
+        
+        jtxtReceipt.setText(strReceipt);
+    }
+    
+    private String escapeNull(String str)
+    {
+        if(str == null)
+        {
+            return "";
+        }
+        else
+        {
+            return str;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -455,6 +478,7 @@ public class OO_Rent extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
