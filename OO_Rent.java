@@ -21,6 +21,8 @@ import javax.swing.JRadioButton;
  */
 public class OO_Rent extends javax.swing.JFrame {
 
+    private MoneyFormatter moneyFormatter;
+    
     private Double totalPayment = 0.00d;
     
     private String strReceipt = "";
@@ -41,6 +43,8 @@ public class OO_Rent extends javax.swing.JFrame {
     public OO_Rent() {
 
         initComponents();
+        
+        moneyFormatter = new MoneyFormatter();
 
         jbtnFlat.setActionCommand("flat");
         jbtnHouse.setActionCommand("house");
@@ -381,13 +385,18 @@ public class OO_Rent extends javax.swing.JFrame {
             utilities.setWaterBill(Double.valueOf(jtxtWaterBill.getText()));
 
             icost = rent.getCost();
+            icost = moneyFormatter.getMoney(icost);
             ielectricity = utilities.getElectricity();
+            ielectricity = moneyFormatter.getMoney(ielectricity);
             itax = utilities.getLocalTax();
             iwaterbill = utilities.getWaterBill();
+            iwaterbill = moneyFormatter.getMoney(iwaterbill);
 
             icost = icost + ielectricity + iwaterbill;
             itax = (icost * itax/100);
+            itax = moneyFormatter.getMoney(itax);
             itotal = icost + itax;
+            itotal = moneyFormatter.getMoney(itotal);
 
             totalPayment = itotal;
             
@@ -399,14 +408,33 @@ public class OO_Rent extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        jtxtCustomerID.setText("");
+        jtxtFirstname.setText("");
+        jtxtSurname.setText("");
+        jtxtAddress.setText("");
+        jtxtTown.setText("");
+        jtxtPostcode.setText("");
+        jcmbProveOfID.setSelectedIndex(0);
+        jtxtDownPayment.setText("");
+        jtxtDeposit.setText("");
+        
+        flatOrHouse.clearSelection();
+        jcmbNoOfRoom.setSelectedIndex(0);
+        jcmbLocation.setSelectedIndex(0);
+        jtxtCost.setText("");
+        
+        jtxtElectricity.setText("");
+        jtxtLocalTax.setText("");
+        jtxtWaterBill.setText("");
+        
+        jtxtReceipt.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        printPage(strReceipt);  
+        printReceipt();  
     }
 
-    public void printPage(String textToPrint){
+    private void printReceipt(){
         PrinterJob job = PrinterJob.getPrinterJob(); 
         PageFormat landscape = job.defaultPage();
         landscape.setOrientation(PageFormat.LANDSCAPE);
@@ -422,7 +450,8 @@ public class OO_Rent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    class PaintCover implements Printable{
+    private class PaintCover implements Printable{
+
         Font fnt = new Font("Helvetica-Bold", Font.PLAIN, 14);
 
         public int print(Graphics g, PageFormat pf, int pageIndex) throws PrinterException {
@@ -455,8 +484,9 @@ public class OO_Rent extends javax.swing.JFrame {
         strReceipt += "Number of rooms: " + rent.getNumberofroom() + "\n";
         strReceipt += "Location: " + escapeNull(rent.getLocation()) + "\n";
         strReceipt += "Cost: $" + rent.getCost() + "\n";
-        strReceipt += "Electric Bill: $" + utilities.getElectricity() + "\n";
-        strReceipt += "Local Tax $: " + utilities.getLocalTax() + "\n";
+        strReceipt += "Electricity: $" + utilities.getElectricity() + "\n";
+        strReceipt += "Local Tax: " + utilities.getLocalTax() + "%\n";
+        strReceipt += "Water Bill: $" + utilities.getWaterBill() + "\n";
         strReceipt += "Total Payment $: " + totalPayment + "\n";
         strReceipt += "========================\n";
         
