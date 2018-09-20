@@ -21,6 +21,8 @@ import javax.swing.JRadioButton;
  */
 public class OO_Rent extends javax.swing.JFrame {
 
+    private Double totalPayment = 0.00d;
+    
     private String strReceipt = "";
 
     private oCustomer customer = new oCustomer();
@@ -387,7 +389,9 @@ public class OO_Rent extends javax.swing.JFrame {
             itax = (icost * itax/100);
             itotal = icost + itax;
 
-            jtxtTotalPayment.setText("$" + itotal + "");
+            totalPayment = itotal;
+            
+            jtxtTotalPayment.setText("$" + totalPayment + "");
 
             setReceipt();
             
@@ -445,6 +449,15 @@ public class OO_Rent extends javax.swing.JFrame {
         strReceipt += "Down Payment: $" + customer.getDownPayment() + "\n";
         strReceipt += "Deposit: $" + customer.getDeposit() + "\n";
         strReceipt += "Prove Of ID: " + customer.getProveofID() + "\n";
+        strReceipt += "========================\n";
+        strReceipt += "========================\n";
+        strReceipt += rent.getFlat() == 1 ? "Rent Type: Flat\n" : "Rent Type: House\n";
+        strReceipt += "Number of rooms: " + rent.getNumberofroom() + "\n";
+        strReceipt += "Location: " + escapeNull(rent.getLocation()) + "\n";
+        strReceipt += "Cost: $" + rent.getCost() + "\n";
+        strReceipt += "Electric Bill: $" + utilities.getElectricity() + "\n";
+        strReceipt += "Local Tax $: " + utilities.getLocalTax() + "\n";
+        strReceipt += "Total Payment $: " + totalPayment + "\n";
         strReceipt += "========================\n";
         
         jtxtReceipt.setText(strReceipt);
