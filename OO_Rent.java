@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.print.*;
+import java.util.Date;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -470,16 +471,18 @@ public class OO_Rent extends javax.swing.JFrame {
 
     private void setReceipt()
     {
-        strReceipt = "==RECEIPT\n \n";
-        strReceipt += "========================\n";
+        Date myDate = new Date();
+        String date = myDate.getMonth() + "-" + myDate.getDate() + "-" + myDate.getYear();
+        
+        strReceipt = "-- RECEIPT --\n \n";
+        strReceipt += date + "\n";
         strReceipt += "CustomerID: " + escapeNull(customer.getCustomerID()) + "\n";
         strReceipt += "Name: " + escapeNull(customer.getFirstname()) + " " + escapeNull(customer.getSurname()) + "\n";
         strReceipt += "Address: " + escapeNull(customer.getAddress()) + " " + escapeNull(customer.getTown()) + ", " + escapeNull(customer.getPostcode()) + "\n";
         strReceipt += "Down Payment: $" + customer.getDownPayment() + "\n";
         strReceipt += "Deposit: $" + customer.getDeposit() + "\n";
-        strReceipt += "Prove Of ID: " + customer.getProveofID() + "\n";
-        strReceipt += "========================\n";
-        strReceipt += "========================\n";
+        strReceipt += "Prove Of ID: " + customer.getProveofID();
+        strReceipt += "\n\n========================\n\n";
         strReceipt += rent.getFlat() == 1 ? "Rent Type: Flat\n" : "Rent Type: House\n";
         strReceipt += "Number of rooms: " + rent.getNumberofroom() + "\n";
         strReceipt += "Location: " + escapeNull(rent.getLocation()) + "\n";
@@ -488,7 +491,6 @@ public class OO_Rent extends javax.swing.JFrame {
         strReceipt += "Local Tax: " + utilities.getLocalTax() + "%\n";
         strReceipt += "Water Bill: $" + utilities.getWaterBill() + "\n";
         strReceipt += "Total Payment $: " + totalPayment + "\n";
-        strReceipt += "========================\n";
         
         jtxtReceipt.setText(strReceipt);
     }
